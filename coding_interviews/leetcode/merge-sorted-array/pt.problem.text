@@ -1,0 +1,35 @@
+Merge Sorted Array
+
+Enunciado:
+Dadas duas arrays de inteiros nums1 e nums2, ordenadas em ordem
+nao decrescente, e dois inteiros m e n representando o numero de
+elementos em nums1 e nums2, respectivamente.
+
+Merge nums1 e nums2 em uma unica array ordenada em ordem nao
+decrescente.
+
+A array final deve ser armazenada dentro de nums1. Para isso,
+nums1 tem comprimento m + n, onde os primeiros m elementos sao os
+elementos a serem mergeados, e os ultimos n elementos sao zeros e
+devem ser ignorados. nums2 tem comprimento n.
+
+Exemplos:
+
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+Output: [1,2,2,3,5,6]
+
+Input: nums1 = [1], m = 1, nums2 = [], n = 0
+Output: [1]
+
+Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+Output: [1]
+
+Restricoes:
+nums1.length == m + n
+nums2.length == n
+0 <= m, n <= 200
+1 <= m + n <= 200
+-10^9 <= nums1[i], nums2[j] <= 10^9
+
+Follow up:
+Tente um algoritmo que rode em O(m + n) tempo.
