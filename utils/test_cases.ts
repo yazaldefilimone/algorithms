@@ -9,12 +9,12 @@ const RED = "\x1b[31m";
 const RESET = "\x1b[0m";
 
 export function run_cases<Input extends any[], Output>(
-  fn: (...args: Input) => Output,
+  fn: (input: Input, expected: Output) => Output,
   cases: TestCase<Input, Output>[],
   compare: (a: Output, b: Output) => boolean,
 ) {
   cases.forEach((tc, index) => {
-    const result = fn(...tc.input);
+    const result = fn(tc.input, tc.expected);
     const description = tc.description || "";
     if (compare(result, tc.expected)) {
       const success = `${GREEN}case ${index + 1} passed${RESET}`;
