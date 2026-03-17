@@ -1,0 +1,24 @@
+Remover Duplicados de Array Ordenada
+
+Descrição:
+Dada uma array de inteiros nums ordenada em ordem nao decrescente,
+remova os duplicados in-place para que cada elemento unico apareca
+apenas uma vez. A ordem relativa dos elementos deve ser mantida.
+
+Seja k o numero de elementos unicos em nums. Retorne k.
+
+Os primeiros k elementos de nums devem conter os numeros unicos em
+ordem. Os elementos restantes além do indice k-1 podem ser ignorados.
+
+Exemplos:
+
+Input: nums = [1,1,2]
+Output: 2, nums = [1,2,_]
+
+Input: nums = [0,0,1,1,1,2,2,3,3,4]
+Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+
+Restrições:
+1 <= nums.length <= 3*10^4
+-100 <= nums[i] <= 100
+nums está ordenada em ordem não decrescente
