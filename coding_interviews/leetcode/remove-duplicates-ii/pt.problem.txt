@@ -1,0 +1,37 @@
+Remover Duplicados de Array Ordenada II
+
+Descricao:
+Dada uma array nums ordenada em ordem nao decrescente,
+remova duplicados in-place para que cada elemento apareca
+no maximo duas vezes. A ordem relativa deve ser mantida.
+
+Seja k o numero de elementos apos remocao. Os primeiros k
+elementos de nums devem conter o resultado. O restante pode
+ser ignorado.
+
+Retorne k. Nao use memoria extra. Modifique nums in-place
+com O(1) memoria extra.
+
+Validador:
+int[] nums = [...];
+int[] expectedNums = [...];
+
+int k = removeDuplicates(nums);
+
+assert k == expectedNums.length;
+for (int i = 0; i < k; i++) {
+    assert nums[i] == expectedNums[i];
+}
+
+Exemplos:
+
+Input: nums = [1,1,1,2,2,3]
+Output: 5, nums = [1,1,2,2,3,_]
+
+Input: nums = [0,0,1,1,1,1,2,3,3]
+Output: 7, nums = [0,0,1,1,2,3,3,_,_]
+
+Restricoes:
+1 <= nums.length <= 3*10^4
+-10^4 <= nums[i] <= 10^4
+nums esta ordenada em ordem nao decrescente

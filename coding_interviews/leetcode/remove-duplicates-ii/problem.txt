@@ -1,0 +1,37 @@
+Remove Duplicates from Sorted Array II
+
+Description:
+Given an integer array nums sorted in non-decreasing order,
+remove duplicates in-place so each element appears at most
+twice. The relative order must be preserved.
+
+Let k be the number of elements after removal. The first k
+elements of nums must contain the result. Elements beyond k
+can be ignored.
+
+Return k. Do not use extra space. Modify nums in-place with
+O(1) extra memory.
+
+Custom Judge:
+int[] nums = [...];
+int[] expectedNums = [...];
+
+int k = removeDuplicates(nums);
+
+assert k == expectedNums.length;
+for (int i = 0; i < k; i++) {
+    assert nums[i] == expectedNums[i];
+}
+
+Examples:
+
+Input: nums = [1,1,1,2,2,3]
+Output: 5, nums = [1,1,2,2,3,_]
+
+Input: nums = [0,0,1,1,1,1,2,3,3]
+Output: 7, nums = [0,0,1,1,2,3,3,_,_]
+
+Constraints:
+1 <= nums.length <= 3*10^4
+-10^4 <= nums[i] <= 10^4
+nums is sorted in non-decreasing order
