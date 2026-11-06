@@ -1,0 +1,9 @@
+tab_spaces = 2
+max_width = 100
+hard_tabs = false
+edition = "2024"
+use_small_heuristics = "Max"
+newline_style = "Unix"
+match_block_trailing_comma = true
+struct_lit_width = 80
+chain_width = 60
