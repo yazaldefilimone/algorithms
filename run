@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+BUILD_DIR="$ROOT_DIR/.build"
+mkdir -p "$BUILD_DIR"
+
+trap 'rm -rf "$BUILD_DIR"/*' EXIT
+
+CC="${CC:-$(command -v clang || command -v gcc || true)}"
+if [ -z "$CC" ]; then
+    echo "error: no C compiler found" >&2
+    exit 1
+fi
+
+CFLAGS="-Wall -Wextra -std=c11 -g -fsanitize=address,undefined"
+
+compile_and_run_c() {
+    local src="$1"
+    local bin="$BUILD_DIR/c_$(basename "$src" .c)_$$"
+    printf "\033[1;34m::\033[0m %s\n" "$src"
+    "$CC" $CFLAGS "$src" -o "$bin"
+    "$bin"
+    rm -f "$bin"
+}
+
+compile_and_run_rs() {
+    local src="$1"
+    local bin="$BUILD_DIR/rs_$(basename "$src" .rs)_$$"
+    printf "\033[1;35m::\033[0m %s\n" "$src"
+    if grep -q "test" "$src"; then
+        rustc --test "$src" -o "$bin"
+    else
+        rustc "$src" -o "$bin"
+    fi
+    local output
+    if output="$("$bin" 2>&1)"; then
+        echo "ok"
+    else
+        printf "%s\n" "$output" >&2
+        return 1
+    fi
+    rm -f "$bin"
+}
+
+dispatch() {
+    case "$1" in
+        *.c)  compile_and_run_c "$1" ;;
+        *.rs) compile_and_run_rs "$1" ;;
+        *)    echo "error: unsupported file type: $1" >&2; return 1 ;;
+    esac
+}
+
+if [ $# -eq 0 ]; then
+    printf "usage: %s [all | <file> | <query> [c|rs]]\n" "$0"
+    exit 1
+fi
+
+target="$1"
+filter="${2:-}"
+
+if [ "$target" = "all" ]; then
+    find coding_interviews computer_science -type f \( -name "*.c" -o -name "*.rs" \) | sort | while read -r f; do
+        dispatch "$f"
+    done
+    exit 0
+fi
+
+if [ -f "$target" ]; then
+    dispatch "$target"
+    exit 0
+fi
+
+matched=0
+while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    case "$filter" in
+        c)  [[ "$f" != *.c ]] && continue ;;
+        rs) [[ "$f" != *.rs ]] && continue ;;
+    esac
+    dispatch "$f"
+    matched=$((matched + 1))
+done < <(find coding_interviews computer_science -type f \( -name "*.c" -o -name "*.rs" \) | grep -E "$target" | sort)
+
+if [ "$matched" -eq 0 ]; then
+    echo "error: no matches found for '$target'" >&2
+    exit 1
+fi
